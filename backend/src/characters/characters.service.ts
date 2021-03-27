@@ -12,8 +12,12 @@ export class CharactersService {
         return this.charactersRepository.find()
     }
 
+    async getCharacter(id: number) {
+        return this.charactersRepository.findOne(id)
+    }
+
     async upvoteCharacter(upvoteCharacterDto: UpvoteChraracterDto) {
-        await this.charactersRepository.increment(
+        return this.charactersRepository.increment(
             { id: upvoteCharacterDto.id },
             "votes",
             1

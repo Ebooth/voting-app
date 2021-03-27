@@ -1,5 +1,7 @@
 
+import { Character } from '@components/CharactersList/Character.type'
 import axios from 'axios'
+import { Dispatch } from 'react'
 
 const UPVOTE_CHARACTER_URL = "http://localhost:3001/characters"
 
@@ -8,16 +10,23 @@ interface CharacterRowComponentProps {
     name: string;
     pic: string;
     homeworld?: string;
-    setHasVoted: (hasVoted: boolean) => void
+    setHasVoted: (hasVoted: boolean) => void;
+    setCharacters: Dispatch<React.SetStateAction<Character[]>>
     hasVoted: boolean;
     votes?: number;
 }
 
-export const CharacterRow: React.FC<CharacterRowComponentProps> = ({ id, name, pic, homeworld, votes, setHasVoted, hasVoted }) => {
+export const CharacterRow: React.FC<CharacterRowComponentProps> = ({ id, name, pic, homeworld, votes, setHasVoted, hasVoted, setCharacters }) => {
 
     const handleClick = async () => {
-        await axios.post(UPVOTE_CHARACTER_URL, { id })
+        const character = (await axios.post<Character>(UPVOTE_CHARACTER_URL, { id })).data
         setHasVoted(true)
+        setCharacters(prevState => {
+            const characterIndex = prevState.findIndex(character => character.id === id)
+            prevState.splice(characterIndex, 1)
+            prevState.push(character)
+            return [...prevState]
+        })
     }
 
     return (

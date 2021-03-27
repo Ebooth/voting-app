@@ -13,8 +13,9 @@ export class CharactersController {
     }
 
     @Post()
-    async upvoteCharacters(@Body() upvoteChracterDto: UpvoteChraracterDto) {
-        const upvotedCharacter = this.charactersService.upvoteCharacter(upvoteChracterDto)
+    async upvoteCharacters(@Body() upvoteCharacterDto: UpvoteChraracterDto) {
+        await this.charactersService.upvoteCharacter(upvoteCharacterDto)
+        const upvotedCharacter = await this.charactersService.getCharacter(upvoteCharacterDto.id)
         return upvotedCharacter;
     }
 }
