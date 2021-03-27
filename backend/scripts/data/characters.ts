@@ -1,4 +1,9 @@
 import data from "./star_wars_characters.json"
-import type { Character } from "../interfaces/character.interface"
 
+interface Character {
+    id: number;
+    name: string;
+    pic: string;
+    homeworld?: string;
+}
 export const starWarsCharacters: Character[] = data.characters
