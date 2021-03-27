@@ -1,14 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CharactersService } from './characters.service';
-import { Character } from './interfaces/character.interface';
+import { UpvoteChraracterDto } from './dto/upvote-character.dto';
+import { Character } from "./entities/character.entity"
 
 @Controller('characters')
 export class CharactersController {
     constructor(private charactersService: CharactersService) { }
 
     @Get()
-    getCharacters(): Character[] {
+    async getCharacters(): Promise<Character[]> {
         return this.charactersService.getCharacters()
+    }
+
+    @Post()
+    async upvoteCharacters(@Body() upvoteChracterDto: UpvoteChraracterDto) {
+        const upvotedCharacter = this.charactersService.upvoteCharacter(upvoteChracterDto)
+        return upvotedCharacter;
     }
 }
 

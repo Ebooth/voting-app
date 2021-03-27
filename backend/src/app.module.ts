@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CharactersModule } from './characters/characters.module';
+import { configService } from './config/config.service';
 
+console.log(configService.getTypeOrmConfig())
 @Module({
-  imports: [CharactersModule],
+  imports: [CharactersModule, TypeOrmModule.forRoot(configService.getTypeOrmConfig())],
   controllers: [],
   providers: [],
 })
