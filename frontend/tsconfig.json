@@ -72,9 +72,6 @@
     "paths": {
       "@components/*": [
         "components/*"
-      ],
-      "@data/*": [
-        "data/*"
       ]
     }
   },
