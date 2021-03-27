@@ -15,7 +15,7 @@ export class CharactersService {
     async upvoteCharacter(upvoteCharacterDto: UpvoteChraracterDto) {
         await this.charactersRepository.increment(
             { id: upvoteCharacterDto.id },
-            "numberOfVotes",
+            "votes",
             1
         );
     }

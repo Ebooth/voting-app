@@ -1,38 +1,33 @@
-import { CharacterRow } from "@components/CharacterRow"
-import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { CharacterRow } from "@components/CharacterRow";
+import { useLocalStorage } from "hooks/use-local-storage";
+import { Fragment, useMemo } from "react";
+import useFetch from 'use-http';
+import type { Character } from "./Character.type";
+
+
+
+
 
 const CHARACTERS_URL = "http://localhost:3001/characters"
 
 export const CharactersList: React.FC = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [characters, setCharacters] = useState([]);
+    const [hasVoted, setHasVoted] = useLocalStorage('hasVoted', false);
+    const { loading, error, data = [] } = useFetch<Character[]>(CHARACTERS_URL, {}, [])
 
-    const fetchCharacters = async () => {
-        setIsError(false);
-        setIsLoading(true);
-
-        try {
-            const result = await axios(CHARACTERS_URL);
-            setCharacters(result.data);
-        } catch (error) {
-            setIsError(true);
+    const CharacterRows = useMemo(() => {
+        let characters = data
+        if (hasVoted) {
+            characters.sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0))
         }
+        const rows = data.map(({ id, name, pic, homeworld, votes }) => <CharacterRow key={id} id={id} name={name} homeworld={homeworld} pic={pic} votes={votes} hasVoted={hasVoted} setHasVoted={setHasVoted} />)
+        return rows
+    }, [hasVoted])
 
-        setIsLoading(false);
-    }
-
-    useEffect(() => {
-        fetchCharacters();
-    }, []);
-
-    const CharacterRows = characters.map(({ id, name, pic, homeworld }) => <CharacterRow key={id} name={name} homeworld={homeworld} pic={pic} />)
     return (
         <Fragment>
-            {isError && <div>Something went wrong ...</div>}
+            {error && <div>Something went wrong ...</div>}
 
-            {isLoading ? (
+            {loading ? (
                 <div>Loading ...</div>
             ) : (
                 <ul>
@@ -41,3 +36,8 @@ export const CharactersList: React.FC = () => {
         </Fragment>
     )
 }
+
+
+
+
+
