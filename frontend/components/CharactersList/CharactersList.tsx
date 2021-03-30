@@ -4,7 +4,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import useFetch from 'use-http';
 import type { Character } from "./Character.type";
 
-const CHARACTERS_URL = "http://localhost:3001/characters"
+const CHARACTERS_URL = process.env.API_URL + "characters"
 
 export const CharactersList: React.FC = () => {
     const [characters, setCharacters] = useState<Character[]>([])

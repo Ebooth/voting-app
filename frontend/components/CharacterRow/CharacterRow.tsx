@@ -3,7 +3,7 @@ import { Character } from '@components/CharactersList/Character.type'
 import axios from 'axios'
 import { Dispatch } from 'react'
 
-const UPVOTE_CHARACTER_URL = "http://localhost:3001/characters"
+const UPVOTE_CHARACTER_URL = process.env.API_URL + "characters"
 
 interface CharacterRowComponentProps {
     id: number;
