@@ -35,9 +35,9 @@ export const CharactersList: React.FC = () => {
                     loading ? (
                         <div>Loading ...</div>
                     ) : (
-                        <div>
+                        <div className="m-auto max-w-xl">
                             <h1 className="font-bold text-3xl text-center py-4 mb-8 bg-gray-100">{!hasVoted ? "Vote for your favorite character" : "Ranking"}</h1>
-                            <ul>
+                            <ul >
                                 {CharacterRows}
                             </ul>
                         </div>)

@@ -32,7 +32,7 @@ export const CharacterRow: React.FC<CharacterRowComponentProps> = ({ id, name, p
 
     return (
         <li className="flex h-40 bg-gray-100 py-4 px-8 mb-4 items-center" >
-            <img className="mr-4" src={pic}></img>
+            <img className="mr-4 w-24 object-contain" src={pic}></img>
             <div className="mr-auto">
                 <h3 className="font-bold">{name}</h3>
                 <h4>{homeworld}</h4>
