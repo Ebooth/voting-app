@@ -2,6 +2,7 @@
 import { Character } from '@components/CharactersList/Character.type'
 import axios from 'axios'
 import { Dispatch } from 'react'
+import { AiFillHeart } from "react-icons/ai"
 
 const UPVOTE_CHARACTER_URL = process.env.API_URL + "characters"
 
@@ -37,9 +38,11 @@ export const CharacterRow: React.FC<CharacterRowComponentProps> = ({ id, name, p
                 <h4>{homeworld}</h4>
             </div>
             {
-                hasVoted ? <div>{votes ?? 0}</div> : <button onClick={handleClick} className="flex items-center h-10 bg-green-200 py-4 px-6">upvote</button>
+                hasVoted ? <div className="flex items-center">
+                    <span className="mr-2">{votes ?? 0}</span>
+                    <AiFillHeart />
+                </div> : <button onClick={handleClick} className="flex items-center h-10 bg-green-200 py-4 px-6">upvote</button>
             }
-
         </li>
     )
 }

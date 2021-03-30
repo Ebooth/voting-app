@@ -28,17 +28,20 @@ export const CharactersList: React.FC = () => {
 
     return (
         <Fragment>
-            {error && <div>Something went wrong ...</div>}
-
-            {loading ? (
-                <div>Loading ...</div>
-            ) : (
-                <div>
-                    <h1 className="font-bold text-3xl text-center py-4 mb-8 bg-gray-100">{!hasVoted ? "Vote for your favorite character" : "Ranking"}</h1>
-                    <ul>
-                        {CharacterRows}
-                    </ul>
-                </div>)}
+            {
+                error ?
+                    <div className="text-center font-bold text-red-500">Something went wrong ...</div>
+                    :
+                    loading ? (
+                        <div>Loading ...</div>
+                    ) : (
+                        <div>
+                            <h1 className="font-bold text-3xl text-center py-4 mb-8 bg-gray-100">{!hasVoted ? "Vote for your favorite character" : "Ranking"}</h1>
+                            <ul>
+                                {CharacterRows}
+                            </ul>
+                        </div>)
+            }
         </Fragment>
     )
 }
