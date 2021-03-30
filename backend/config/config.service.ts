@@ -22,15 +22,17 @@ class ConfigService {
   }
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
-    return {
+    const r: TypeOrmModuleOptions = {
       type: 'postgres',
-      host: this.getValue('POSTGRES_HOST'),
-      port: parseInt(this.getValue('POSTGRES_PORT')),
-      username: this.getValue('POSTGRES_USER'),
-      password: this.getValue('POSTGRES_PASSWORD'),
-      database: this.getValue('POSTGRES_DATABASE'),
+      host: this.getValue('RDS_HOSTNAME', false) || this.getValue('POSTGRES_HOST'),
+      port: parseInt(this.getValue('RDS_PORT', false), 10) || parseInt(this.getValue('POSTGRES_PORT'), 10),
+      username: this.getValue('RDS_USERNAME', false) || this.getValue('POSTGRES_USER'),
+      password: this.getValue('RDS_PASSWORD', false) || this.getValue('POSTGRES_PASSWORD'),
+      database: this.getValue('RDS_DB_NAME', false) || this.getValue('POSTGRES_DATABASE'),
       entities: [Character],
     };
+    console.log(r)
+    return r
   }
 
 }
